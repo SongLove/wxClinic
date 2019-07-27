@@ -1,0 +1,20 @@
+{
+  "name": "sass-wxss",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "globby": "^9.2.0",
+    "webpack-fix-style-only-entries": "^0.2.1"
+  }
+}

@@ -1,0 +1,15 @@
+<!--pages/account/account.wxml-->
+<view class="backView"></view>
+<!-- 用户头像操作 -->
+<button wx:if="{{!hasUserInfo && canIUse}}" class="loginBtn" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+<view class="account flex ac acauto">
+  <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  <view class="accountmsg">
+    <text>{{userInfo.nickName }}</text>
+    <text>病号</text>
+  </view>
+</view>
+<!-- 项目 -->
+<view class="accounticon acauto"></view>
+<!-- 项目二 -->
+<view class="accountlist acauto"></view>

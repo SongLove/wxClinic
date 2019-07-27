@@ -1,0 +1,59 @@
+/* pages/account/account.wxss */
+
+.backView {
+  width: 100%;
+  height: 120rpx;
+  background: #b5cfff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.acauto {
+  width: 92%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 10rpx 25rpx;
+  box-sizing: border-box;
+}
+
+.account {
+  height: 150rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 5px 10px rgba(25, 24, 40, 0.35);
+}
+
+.accounticon {
+  height: 150rpx;
+  margin-top: 10px;
+  box-shadow: 0 1px 5px rgba(25, 24, 40, 0.35);
+}
+
+.accountlist {
+  height: 250rpx;
+  margin-top: 10px;
+  box-shadow: 0 1px 5px rgba(25, 24, 40, 0.35);
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+}
+
+.accountmsg text {
+  width: 100%;
+  display: block;
+}
+
+.loginBtn {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 150rpx;
+  border: none;
+  color: transparent;
+  background-color: transparent;
+}
