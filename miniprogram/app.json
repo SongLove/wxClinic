@@ -1,7 +1,10 @@
 {
   "pages": [
-    "pages/account/account",
     "pages/index/index",
+    "pages/release/release",
+    "pages/example/uploader/uploader",
+    "pages/tabs/tabs",
+    "pages/account/account",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -25,8 +28,14 @@
     "borderStyle": "black",
     "list": [
       {
-        "text": "咨询",
+        "text": "首页",
         "pagePath": "pages/index/index",
+        "iconPath": "images/tagbar/consulting.png",
+        "selectedIconPath": "images/tagbar/consulting_on.png"
+      },
+      {
+        "text": "发表作品",
+        "pagePath": "pages/release/release",
         "iconPath": "images/tagbar/consulting.png",
         "selectedIconPath": "images/tagbar/consulting_on.png"
       },

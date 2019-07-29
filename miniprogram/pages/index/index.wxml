@@ -1,14 +1,36 @@
 <!--index.wxml-->
 <view class="container">
-
+  <!-- 头部轮播图 -->
+  <swiper class="swiper" indicator-dots="{{slideSwiper.indicatorDots}}" autoplay="{{slideSwiper.autoplay}}" circular="{{slideSwiper.circular}}" vertical="{{slideSwiper.vertical}}" interval="{{slideSwiper.interval}}" duration="{{slideSwiper.duration}}">
+    <block wx:for="{{slideSwiper.imgUrls}}" wx:key="*this">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="recommend">
+    <view class="text">
+      <text data-index='0' bindtap='changeData' class="{{boxCurrent == 0?'activetit':''}}">今日推荐</text>
+      <text data-index='1' bindtap='changeData' class="{{boxCurrent == 1? 'activetit' : ''}}">热门食谱</text>
+    </view>
+    <swiper current='{{boxCurrent}}' bindchange="swiperChange" class="recommendbox">
+      <swiper-item>
+        <!-- 今日推荐 -->
+        <view class="today">
+          推荐
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <!-- 热门食谱 -->
+        <view class="hot">
+          热门
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
   <!-- 用户 openid -->
   <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-    ></button>
+    <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
     <view>
       <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
     </view>

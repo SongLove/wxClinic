@@ -1,0 +1,82 @@
+<!--pages/release/release.wxml-->
+<view class="content" hidden='{{!userInfo}}'>
+  <!-- 封面图 -->
+  <text class="text">
+      —— 封面大图 ——
+    </text>
+  <view class="weui-cells">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd flex ac jc">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <view class="weui-uploader__file" hidden='{{!files}}' bindtap="previewImage" id="{{files}}">
+                <image class="weui-uploader__img" src="{{files}}" mode="aspectFill" />
+              </view>
+              <!-- <view class="weui-uploader__file weui-uploader__file_status">
+                  <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
+                  <view class="weui-uploader__file-content">
+                    <icon type="warn" size="23" color="#F43530"></icon>
+                  </view>
+                </view>
+                <view class="weui-uploader__file weui-uploader__file_status">
+                  <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
+                  <view class="weui-uploader__file-content">50%</view>
+                </view> -->
+            </view>
+            <view class="weui-uploader__input-box" hidden='{{files.length > 0}}'>
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 菜名 -->
+  <text class="text">
+      —— 菜名 ——
+    </text>
+  <view class="weui-cells">
+    <view class="weui-cell__bd">
+      <input class="weui-input dish-input" type="text" placeholder="如 —— 辣椒小炒肉" />
+    </view>
+  </view>
+  <!-- 介绍 -->
+  <text class="text">
+      —— 介绍 ——
+    </text>
+  <view class="weui-cells">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea food-textarea" placeholder="如 —— 这美味！简直让人不敢相信" rows="3"></textarea>
+      <view class="weui-textarea-counter">
+        <span>0</span>/200</view>
+    </view>
+  </view>
+  <!-- 分类 -->
+  <text class="text">
+      —— 菜肴分类 ——
+    </text>
+  <!-- 食材 -->
+  <text class="text">
+      —— 食材 ——
+    </text>
+  <!-- 操作步骤 -->
+  <text class="text">
+      —— 操作步骤 ——
+    </text>
+  <!-- 小窍门 -->
+  <text class="text">
+      —— 小窍门 ——
+    </text>
+  <!-- 难易程度 -->
+  <text class="text">
+      —— 难易程度 ——
+    </text>
+  <!-- 烹饪时间 -->
+  <text class="text">
+      —— 烹饪时间 ——
+    </text>
+</view>
+<view hidden='{{userInfo}}'>
+  <button class="clickLogin" open-type="getUserInfo" bindgetuserinfo="loginFun">点击登录</button>
+</view>

@@ -26,6 +26,7 @@ Component({
    */
   methods: {
     onLoad: function() {
+      console.log('auccount load')
       if (app.globalData.userInfo) {
         this.setData({
           userInfo: app.globalData.userInfo,

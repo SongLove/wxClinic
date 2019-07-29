@@ -1,0 +1,196 @@
+<view>
+  <!-- tab栏 -->
+  <view class='Tab'>
+    <view class='tabImgL' bindtap='lefttab'>
+      <image mode="widthFix" src='{{zuosrc}}'></image>
+    </view>
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">育乐</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">音乐</view>
+      <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">艺术</view>
+      <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">环球宝贝</view>
+      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">生活技能</view>
+      <view class="tab-item {{currentTab==5?'active':''}}" data-current="5" bindtap="swichNav">学校技能</view>
+    </scroll-view>
+    <view class='tabImgR' bindtap='righttab'>
+      <image mode="widthFix" src='{{yousrc}}'></image>
+    </view>
+  </view>
+
+
+  <!-- 内容 -->
+  <view class="tab-content" current="{{currentTab}}" duration="100" bindchange="switchTab" style="height:{{winHeight}}rpx">
+    <!-- 育月 -->
+    <view wx:if="{{content==0}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <!-- <view class='playImg' bindtap='toH5Page'> -->
+        <view class='playImg'>
+          <image mode="widthFix" src='https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640'></image>
+        </view>
+        <view class='playCnt'>根据宝宝的月龄特点分为六个阶段。课程提供适龄有趣的游戏，帮助家长发现孩子的兴趣，让宝宝在过程中不断探索自己的能力，如空间感、对自己身体的控制等，从中体验到尝试、失败、成功的快乐。</view>
+        <!-- 图片轮播 -->
+
+        <swiper interval="{{interval}}" duration="{{duration}}" bindchange="changeSwiper">
+
+          <block wx:for="{{imgUrls0}}">
+
+            <swiper-item>
+              <image mode="widthFix" src="{{item.imgsrc}}" class="slide-image"></image>
+              <view class='playBot'>
+                <view class='playTitle'>{{item.name}}
+                  <span>{{item.desc}}</span>
+                </view>
+                <view>{{item.content}}</view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class='spot'>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==0}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=0}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==1}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=1}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==2}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=2}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==3}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=3}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==4}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=4}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==5}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=5}}"></view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 音乐 -->
+    <view wx:if="{{content==1}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <view class='playImg'>
+          <image mode="widthFix" src='https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640'></image>
+        </view>
+        <view class='playCnt'>20种音乐风格、乐器的使用，结合听、唱、舞蹈动作和即兴表演，鼓励并激发孩子与生俱来的音乐潜能，让家长掌握与孩子共同探索音乐的方式，见证孩子从吸收到表达 的音乐之路。</view>
+
+        <!-- 图片轮播 -->
+
+        <swiper interval="{{interval}}" duration="{{duration}}" bindchange="changeSwiper">
+
+          <block wx:for="{{imgUrls1}}">
+
+            <swiper-item>
+              <image mode="widthFix" src="{{item.imgsrc}}" class="slide-image"></image>
+              <view class='playBot'>
+                <view class='playTitle'>{{item.name}}
+                  <span>{{item.desc}}</span>
+                </view>
+                <view>{{item.content}}</view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class='spot' style='bottom:0rpx;'>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==0}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=0}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==1}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=1}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==2}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=2}}"></view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 艺术 -->
+    <view wx:if="{{content==2}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <view class='playImg'>
+          <image mode="widthFix" src='https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640'></image>
+        </view>
+        <view class='playCnt'>别出心裁的艺术工具、意想不到的艺术材料和妙趣横生创作过程丰富孩子对自我和环境的表达和探索，进而提高孩子的表达力、专注力、动手及审美能力，打破家长对传统艺术的理解。</view>
+        <!-- 图片轮播 -->
+
+        <swiper interval="{{interval}}" duration="{{duration}}" bindchange="changeSwiper">
+
+          <block wx:for="{{imgUrls2}}">
+            <swiper-item>
+              <image mode="widthFix" src="{{item.imgsrc}}" class="slide-image"></image>
+              <view class='playBot'>
+                <view class='playTitle'>{{item.name}}
+                  <span>{{item.desc}}</span>
+                </view>
+                <view>{{item.content}}</view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class='spot' style='bottom:0rpx;'>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==0}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=0}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==1}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=1}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==2}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=2}}"></view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 环球宝贝 -->
+    <view wx:if="{{content==3}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <view class='playImg'>
+          <image mode="widthFix" src='https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640'></image>
+        </view>
+        <view class='playCnt'>游历世界各地24个区域，通过游戏、舞蹈、歌曲、手工，感受与日常不一样的文化，丰富的材料与道具，让孩子动手操作时更富想象力。孩子们不但学习到不同知识与语言，更能早早体验到包容与多元，为世界观打下基础。</view>
+        <!-- 图片轮播 -->
+
+        <swiper interval="{{interval}}" duration="{{duration}}" bindchange="changeSwiper">
+
+          <block wx:for="{{imgUrls3}}">
+            <swiper-item>
+              <image mode="widthFix" src="{{item.imgsrc}}" class="slide-image"></image>
+              <view class='playBot'>
+                <view class='playTitle'>{{item.name}}
+                  <span>{{item.desc}}</span>
+                </view>
+                <view>{{item.content}}</view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class='spot'>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==0}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=0}}"></view>
+          <view class='spot1' data-it='{{item.spot}}' wx:if="{{swipperSpot==1}}"></view>
+          <view class='spot2' data-it='{{item.spot}}' wx:elif="{{swipperSpot!=1}}"></view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 生活技能 -->
+    <view wx:if="{{content==4}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <view style='height:1100rpx'>
+          <view class='lifeskills'>
+            <image mode="widthFix" src='https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640'></image>
+          </view>
+          <view class='playBot' style='padding:2%'>
+            <view class='playTitle'>Life Skills
+              <span>生活技能</span>
+            </view>
+            <view>3~5岁的宝贝,通过实践类游戏，让孩子获得体验不同生活场景和主题的机会，挑战孩子在不同场景下身体的灵活使用。游戏过程均是对生活的模拟，让孩子认知生活层面的基本概念，提升常识与技能，提高从容生活的能力，做一个自信的社会人。</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 学校技能 -->
+    <view wx:if="{{content==5}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <view style='height:1100rpx'>
+          <view class='lifeskills'>
+            <image src='../../images/photo/schoolskills.jpg'></image>
+          </view>
+          <view class='playBot' style='padding:2%'>
+            <view class='playTitle'>School Skills
+              <span>学校技能</span>
+            </view>
+            <view>3~5岁的宝贝，随着孩子注意力、理解力的提升，课程增加为90分钟并在两间教室辗转上课。两位指导师将陪伴孩子度过与父母的分离期，通过“正面强化”“讨论”“示范”等方式强化孩子在幼儿园、家里、户外，乃至一生都需要的社交技能。</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

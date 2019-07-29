@@ -1,0 +1,193 @@
+.Tab {
+  width: 100%;
+  background: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  font-size: 32rpx;
+  white-space: nowrap;
+  color: #888;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+ 
+/* 箭头 */
+ 
+.tabImgL, .tabImgR {
+  width: 8%;
+  text-align: center;
+  display: inline-block;
+}
+.tabImgL{
+  text-align: left;
+  
+}
+.tabImgR{
+  text-align: right;
+  
+}
+.tabImgL {
+  position: fixed;
+  top: 10rpx;
+  left: 0;
+}
+ 
+.tabImgR {
+  position: fixed;
+  top: 10rpx;
+  right: 0;
+}
+ 
+.tabImgL image, .tabImgR image {
+  width: 80%;
+}
+ 
+/* tab栏切换样式 */
+ 
+.tab-h {
+  width: 84%;
+  margin: 0 auto;
+  position: fixed;
+  height: 80rpx;
+  line-height: 80rpx;
+  top: 0;
+  left: 8%;
+}
+ 
+.tab-item {
+ width: 160rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 30rpx;
+  text-align: center;
+  position: relative;
+  padding: 0 10rpx;
+  display: inline-block;
+}
+ 
+.tab-item.active {
+  width: 160rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  background: #ef7421;
+  color: #fff;
+  border-radius: 30rpx;
+  text-align: center;
+  position: relative;
+  padding: 0 10rpx;
+}
+ 
+/* 育月样式 */
+ 
+.playImg {
+ padding: 2%;
+  text-align: center;
+}
+ 
+.playImg image {
+  width: 100%;
+}
+.playCnt {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #666;
+  padding: 2%;
+  text-align: justify;
+}
+ 
+swiper {
+  margin: 0 2%;
+  text-align: center;
+  height:920rpx;
+  border-radius: 20rpx;
+  z-index: 1;
+  position: relative;
+}
+ 
+.slide-image {
+  width: 720rpx;
+  border-radius: 20rpx;
+}
+ 
+.lifeskills {
+  padding: 2%;
+  text-align: center;
+}
+ 
+.lifeskills image {
+  width: 100%;
+  border-radius: 20rpx;
+}
+ 
+.playBot {
+  text-align: justify;
+  color: #666;
+}
+ 
+.playTitle {
+  color: #ef7421;
+  font-size: 50rpx;
+}
+ 
+.playTitle span {
+  font-size: 32rpx;
+  margin-left: 14rpx;
+}
+ 
+.tab-content {
+  width: 100%;
+  border-radius: 0 !important;
+  border-top: 30rpx solid #f6f6f6;
+  margin-top: 80rpx;
+}
+ 
+.scoll-h {
+  height: 100%;
+}
+ 
+swiper-item {
+  overflow: hidden;
+  border-radius: 20rpx;
+}
+ 
+/* 轮播小点的样式 */
+.spot{
+  width: 40%;
+  height: auto;
+  left: 30%;
+  position: relative;
+   bottom:30rpx;
+   text-align: center;
+  z-index: 90;
+  display: block;
+   
+}
+.spot1 {
+  width: 15rpx;
+  height: 15rpx;
+  background: #ef7421;
+  border: 4rpx solid #fff;
+  display: inline-block;
+  margin: 10rpx;
+  border-radius: 50%;
+  z-index: 20;
+  position: relative;
+ 
+}
+ 
+.spot2 {
+  width: 15rpx;
+  height: 15rpx;
+  background: #000;
+  opacity: 0.2;
+  border: 2rpx solid #fff;
+  display: inline-block;
+  margin: 10rpx;
+  border-radius: 50%;
+  z-index: 20;
+  position: relative;
+  
+}
+ 

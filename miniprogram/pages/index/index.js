@@ -1,5 +1,6 @@
 //index.js
 const app = getApp()
+const util = require('../../utils.js')
 
 Page({
   data: {
@@ -7,9 +8,33 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    slideSwiper: {
+      imgUrls: [
+        'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+        'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+        'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+      ],
+      background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
+      indicatorDots: true,
+      autoplay: true,
+      circular: true,
+      interval: 3000,
+      duration: 500
+    },
+    boxCurrent: 0
   },
+  changeData(e) {
+    this.setData({
+      boxCurrent: e.currentTarget.dataset.index
+    })
+  },
+  swiperChange(e) {
+    this.setData({
+      boxCurrent: e.detail.current
+    })
 
+  },
   onLoad: function() {
     if (!wx.cloud) {
       wx.redirectTo({
@@ -68,53 +93,27 @@ Page({
   },
 
   // 上传图片
-  doUpload: function () {
-    // 选择图片
+  doUpload() {
+    let That = this
     wx.chooseImage({
-      count: 1,
+      count: 9,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
-
+      success: function(res) {
         wx.showLoading({
           title: '上传中',
         })
-
         const filePath = res.tempFilePaths[0]
-        
         // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
+        const cloudPath = Date.parse(new Date()) / 1000 + 'my-image' + filePath.match(/\.[^.]+?$/)[0]
+        util.upImg(cloudPath, filePath, That.call)
       },
       fail: e => {
         console.error(e)
       }
     })
   },
-
+  call(res) {
+    console.log('call', res)
+  }
 })
