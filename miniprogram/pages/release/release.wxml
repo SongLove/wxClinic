@@ -5,29 +5,15 @@
       —— 封面大图 ——
     </text>
   <view class="weui-cells">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <view class="weui-uploader">
-          <view class="weui-uploader__bd flex ac jc">
-            <view class="weui-uploader__files" id="uploaderFiles">
-              <view class="weui-uploader__file" hidden='{{!files}}' bindtap="previewImage" id="{{files}}">
-                <image class="weui-uploader__img" src="{{files}}" mode="aspectFill" />
-              </view>
-              <!-- <view class="weui-uploader__file weui-uploader__file_status">
-                  <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
-                  <view class="weui-uploader__file-content">
-                    <icon type="warn" size="23" color="#F43530"></icon>
-                  </view>
-                </view>
-                <view class="weui-uploader__file weui-uploader__file_status">
-                  <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
-                  <view class="weui-uploader__file-content">50%</view>
-                </view> -->
-            </view>
-            <view class="weui-uploader__input-box" hidden='{{files.length > 0}}'>
-              <view class="weui-uploader__input" bindtap="chooseImage"></view>
-            </view>
+    <view class="weui-uploader flex ac jc">
+      <view class="weui-uploader__bd coveruploader flex ac jc">
+        <view class="weui-uploader__files" id="uploaderFiles">
+          <view class="weui-uploader__file" hidden='{{!uploadObj.files}}' bindtap="previewImage" id="{{uploadObj.files}}">
+            <image class="weui-uploader__img" src="{{uploadObj.files}}" mode="aspectFill" />
           </view>
+        </view>
+        <view class="weui-uploader__input-box" hidden='{{uploadObj.files.length > 0}}'>
+          <view class="weui-uploader__input" data-name="files" bindtap="chooseImage"></view>
         </view>
       </view>
     </view>
@@ -38,7 +24,7 @@
     </text>
   <view class="weui-cells">
     <view class="weui-cell__bd">
-      <input class="weui-input dish-input" type="text" placeholder="如 —— 辣椒小炒肉" />
+      <input bindinput='changeFoodName' class="weui-input dish-input" type="text" placeholder="如 —— 辣椒小炒肉" />
     </view>
   </view>
   <!-- 介绍 -->
@@ -47,7 +33,7 @@
     </text>
   <view class="weui-cells">
     <view class="weui-cell__bd">
-      <textarea class="weui-textarea food-textarea" placeholder="如 —— 这美味！简直让人不敢相信" rows="3"></textarea>
+      <textarea bindinput='changeRecommend' class="weui-textarea food-textarea" placeholder="如 —— 这美味！简直让人不敢相信" rows="3"></textarea>
       <view class="weui-textarea-counter">
         <span>0</span>/200</view>
     </view>
@@ -55,28 +41,92 @@
   <!-- 分类 -->
   <text class="text">
       —— 菜肴分类 ——
-    </text>
+  </text>
+  <view class="section">
+    <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+      <view class="picker">
+        当前选择：{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+      </view>
+    </picker>
+  </view>
   <!-- 食材 -->
   <text class="text">
       —— 食材 ——
-    </text>
+  </text>
+  <view class="material">
+    <button class="weui-btn" type="primary" bindtap='addMaterial'>添加食材</button>
+    <view wx:for="{{uploadObj.materialArr}}" wx:key="ind" class="flex ac jc materialitem">
+      <input class="weui-input" data-index="{{index}}" maxlength="10" placeholder="列：牛肉" />
+      <input class="weui-input" data-index="{{index}}" maxlength="10" placeholder="列：50g" />
+      <icon bindtap='deleMaterial' data-index="{{index}}" type="success" size="23"></icon>
+    </view>
+  </view>
   <!-- 操作步骤 -->
   <text class="text">
       —— 操作步骤 ——
-    </text>
+  </text>
+  <view class="weui-cells">
+    <view class="weui-cell__bd">
+      <textarea bindinput='changeStep' class="weui-textarea food-textarea" placeholder="如：先把新鲜的黄瓜切片" rows="3"></textarea>
+      <view class="weui-textarea-counter">
+        <span>0</span>/300</view>
+    </view>
+    <view>*完成一步按回车再输入下一步操作</view>
+  </view>
+  <!-- 图片步骤 -->
+  <text class="text">
+      —— 图片步骤 ——
+  </text>
+  <view class="weui-cells">
+    <view class="weui-cell">
+
+      <view class="weui-uploader__bd">
+        <view class="weui-uploader__files" id="uploaderFiles">
+          <block wx:for="{{uploadObj.stepFiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+              <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+            </view>
+          </block>
+        </view>
+        <view class="weui-uploader__input-box" hidden='{{uploadObj.stepFiles.length >= 9}}'>
+          <view class="weui-uploader__input" data-name="stepFiles" bindtap="chooseImage"></view>
+        </view>
+      </view>
+    </view>
+  </view>
   <!-- 小窍门 -->
   <text class="text">
       —— 小窍门 ——
-    </text>
+  </text>
+  <view class="weui-cells">
+    <view class="weui-cell__bd">
+      <textarea bindinput='changeDoohickey' class="weui-textarea food-textarea" placeholder="跟大家分享下制作的乐趣与注意事项吧" rows="3 "></textarea>
+      <view class="weui-textarea-counter ">
+        <span>0</span>/200</view>
+    </view>
+  </view>
   <!-- 难易程度 -->
-  <text class="text">
+  <text class="text ">
       —— 难易程度 ——
     </text>
+  <radio-group class="radio-group " bindchange="changeDifficulty ">
+    <label class="radio " wx:for="{{difficulty}}" wx:key="*item">
+      <radio value="{{item.name}} " checked="{{item.checked}} " />{{item.value}}
+    </label>
+  </radio-group>
   <!-- 烹饪时间 -->
-  <text class="text">
+  <text class="text ">
       —— 烹饪时间 ——
-    </text>
+  </text>
+  <view class="section">
+    <picker bindchange="bindCookingChange" value="{{cookingIndex}}" range="{{cookingTime}}">
+      <view class="picker">
+        {{cookingTime[cookingIndex]}}
+      </view>
+    </picker>
+  </view>
+  <button class="weui-btn add-cookbook" type="primary" bindtap='addCookbook'>发布食谱</button>
 </view>
 <view hidden='{{userInfo}}'>
-  <button class="clickLogin" open-type="getUserInfo" bindgetuserinfo="loginFun">点击登录</button>
+  <button class="loginBtn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">点击登录</button>
 </view>

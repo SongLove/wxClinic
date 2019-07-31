@@ -8,8 +8,10 @@
 
 .text {
   width: 100%;
-  display: block;
-  text-align: center;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .dish-input{
   width: 90%;
@@ -21,4 +23,22 @@
   margin: 0 auto;
   padding: 30rpx 0;
   box-sizing: border-box;
+}
+.material{
+  width: 94%;
+  margin: 0 auto;
+}
+.materialitem input {
+  border: 1rpx solid #eee;
+  border-radius: 10rpx;
+}
+.materialitem{
+  margin:  20rpx 0;
+}
+.materialitem input{
+  margin-right: 15rpx;
+}
+.add-cookbook{
+  width: 94%;
+  margin: 0 auto;
 }
