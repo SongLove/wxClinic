@@ -5,6 +5,8 @@
     "pages/example/uploader/uploader",
     "pages/tabs/tabs",
     "pages/account/account",
+    "pages/account/favorite/favorite",
+    "pages/account/location/location",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -19,7 +21,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "康达互联网医院",
+    "navigationBarTitleText": "小程序",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

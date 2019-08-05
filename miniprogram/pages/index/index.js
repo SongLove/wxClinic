@@ -1,9 +1,12 @@
 //index.js
 const app = getApp()
+const db = wx.cloud.database()
 const util = require('../../utils.js')
 
 Page({
   data: {
+    screenWidth: 0,
+    screenHeight: 0,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     logged: false,
@@ -22,7 +25,9 @@ Page({
       interval: 3000,
       duration: 500
     },
-    boxCurrent: 0
+    boxCurrent: 0,
+    articleList: [],
+    isShow: false
   },
   changeData(e) {
     this.setData({
@@ -33,7 +38,30 @@ Page({
     this.setData({
       boxCurrent: e.detail.current
     })
-
+  },
+  onShow() {
+    let that = this
+    // 获取文章列表
+    db.collection('articles').get({
+      success(res) {
+        let data = res.data
+        data.show = false
+        that.setData({
+          articleList: res.data
+        })
+        if (!that.data.isShow) {
+          console.log(that.data.isShow)
+          that.lazyLoad()
+          that.setData({
+            isShow: true
+          })
+        }
+      }
+    })
+    this.setData({
+      screenWidth: wx.getSystemInfoSync().windowWidth,
+      screenHeight: wx.getSystemInfoSync().windowHeight
+    })
   },
   onLoad: function() {
     if (!wx.cloud) {
@@ -42,7 +70,6 @@ Page({
       })
       return
     }
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -60,7 +87,42 @@ Page({
       }
     })
   },
-
+  lazyLoad() {
+    //滚动距离+屏幕高度换算vw倍数
+    let height = this.data.screenHeight
+    let articleList = this.data.articleList
+    wx.createSelectorQuery().selectAll('.list ').boundingClientRect((ret) => {
+      ret.forEach((item, index) => {
+        if (item.top <= height) {
+          // 判断是否在显示范围内
+          articleList[index].show = true // 根据下标改变状态
+        }
+      })
+      this.setData({
+        articleList
+      })
+    }).exec()
+  },
+  // 滚动事件 
+  onPageScroll() {
+    this.lazyLoad()
+  },
+  // 查看详情
+  goArticle(e) {
+    db.collection('articles').where({
+      _id: e.currentTarget.dataset.id
+    }).get({
+      success(res) {
+        wx.setStorage({
+          key: 'ARTICLE',
+          data: res.data[0],
+        })
+        wx.navigateTo({
+          url: '../article/article',
+        })
+      }
+    })
+  },
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
       this.setData({
@@ -70,7 +132,6 @@ Page({
       })
     }
   },
-
   onGetOpenid: function() {
     // 调用云函数
     wx.cloud.callFunction({
@@ -91,7 +152,6 @@ Page({
       }
     })
   },
-
   // 上传图片
   doUpload() {
     let That = this

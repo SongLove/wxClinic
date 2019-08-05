@@ -10,6 +10,9 @@
   </view>
 </view>
 <!-- 项目 -->
-<view class="accounticon acauto"></view>
+<view class="accounticon acauto">
+  <text>选择位置</text>
+  <navigator url='/pages/account/favorite/favorite'>我的收藏</navigator>
+</view>
 <!-- 项目二 -->
 <view class="accountlist acauto"></view>

@@ -1,2 +1,62 @@
 <!--pages/article/article.wxml-->
-<text>pages/article/article.wxml</text>
+<view class="content">
+  <view class="cover">
+    <image mode="aspectFill" src='{{article.cover}}'></image>
+  </view>
+  <view class="content-box">
+    <view class="foodname">
+      <text>{{article.foodName}}</text>
+    </view>
+    <!-- 作者头像名字本章的点赞和收藏 -->
+    <view class="flex ac jc">
+
+    </view>
+    <!-- 介绍 -->
+    <view>
+      {{article.recommend}}
+    </view>
+    <!-- 难度 与烹饪时间 -->
+    <view class="flex ac jb">
+      <view>
+        烹饪难度：{{article.difficulty}}
+      </view>
+      <view>
+        烹饪时间：{{article.cookingTime}}
+      </view>
+    </view>
+    <!-- 食材清单 -->
+    <view class="detailedlist ">
+      <text>食材清单</text>
+      <view class="materialbox flex ac jb" wx:for="{{article.materialArr}}" wx:key="*item">
+        <view>{{item.foodName}}</view>
+        <view>{{item.volume}}</view>
+      </view>
+    </view>
+    <!-- 做法步骤 -->
+    <view></view>
+    <!-- 图片分享 -->
+    <view class="flex fw stepFiles jc">
+      <view bindtap='previewImage' class="stepFilesBox" wx:for="{{article.stepFiles}}" wx:key="*this" data-id="{{item}}">
+        <text class="stepFilesInd flex ac jc">{{index + 1}}</text>
+        <image mode="aspectFill" src="{{item}}"></image>
+      </view>
+    </view>
+    <!-- 烹饪小窍门 -->
+    <view>
+      {{article.doohickey}}
+    </view>
+  </view>
+  <!-- 点赞收藏 -->
+  <view class="giveandcollect flex ac je">
+    <view class="box" bindtap='likeAndCollectArticle' data-type="like" data-id="{{article._id}}">
+      <icon wx:if="{{isLike}}" type="success_no_circle" size="23"></icon>
+      <icon wx:else type="success" size="23"></icon>
+      <text>{{isLike ? '已赞' : '点赞'}}</text>
+    </view>
+    <view class="box" bindtap='likeAndCollectArticle' data-type="collect" data-id="{{article._id}}">
+      <icon wx:if="{{isCollect}}" type="success_no_circle" size="23"></icon>
+      <icon wx:else type="success" size="23"></icon>
+      <text>{{isCollect ? '已收藏' : '收藏' }}</text>
+    </view>
+  </view>
+</view>

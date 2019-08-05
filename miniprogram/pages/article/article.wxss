@@ -1,1 +1,69 @@
 /* pages/article/article.wxss */
+
+.cover image {
+  width: 100%;
+  height: 200px;
+}
+
+.content-box {
+  margin: 0 20rpx;
+  margin-top: 15rpx;
+  padding-bottom: 180rpx;
+}
+
+.foodname {
+  width: 100%;
+  text-align: center;
+}
+
+.foodname text {
+  font-size: 40rpx;
+  margin-bottom: 15rpx;
+  font-weight: bold;
+  padding: 15rpx;
+  border-top: 1rpx solid #000;
+  border-bottom: 1rpx solid #000;
+}
+
+.giveandcollect {
+  width: 100%;
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  border-top: 1rpx solid #ddd;
+  background: #fff;
+}
+
+.box {
+  width: 50%;
+  text-align: center;
+}
+.box icon{
+  margin-right: 15rpx;
+  vertical-align: middle;  
+}
+.materialbox{
+  border-bottom: 1rpx solid #ddd;
+  margin-top: 15rpx;
+}
+.stepFiles image{
+  width: 100%;
+  height: 100%;
+}
+.stepFilesBox{
+  position: relative;
+  width: 48%;
+  height: 300rpx;
+  margin: 5rpx;
+}
+.stepFilesInd{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  background: #F3EBDF;
+  color: #000;
+  font-size: 35rpx;
+}

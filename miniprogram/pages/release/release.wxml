@@ -8,12 +8,12 @@
     <view class="weui-uploader flex ac jc">
       <view class="weui-uploader__bd coveruploader flex ac jc">
         <view class="weui-uploader__files" id="uploaderFiles">
-          <view class="weui-uploader__file" hidden='{{!uploadObj.files}}' bindtap="previewImage" id="{{uploadObj.files}}">
-            <image class="weui-uploader__img" src="{{uploadObj.files}}" mode="aspectFill" />
+          <view class="weui-uploader__file" hidden='{{!uploadObj.cover}}' bindtap="previewImage" id="{{uploadObj.cover}}">
+            <image class="weui-uploader__img" src="{{uploadObj.cover}}" mode="aspectFill" />
           </view>
         </view>
-        <view class="weui-uploader__input-box" hidden='{{uploadObj.files.length > 0}}'>
-          <view class="weui-uploader__input" data-name="files" bindtap="chooseImage"></view>
+        <view class="weui-uploader__input-box" hidden='{{uploadObj.cover.length > 0}}'>
+          <view class="weui-uploader__input" data-name="cover" bindtap="chooseImage"></view>
         </view>
       </view>
     </view>
@@ -56,8 +56,8 @@
   <view class="material">
     <button class="weui-btn" type="primary" bindtap='addMaterial'>添加食材</button>
     <view wx:for="{{uploadObj.materialArr}}" wx:key="ind" class="flex ac jc materialitem">
-      <input class="weui-input" data-index="{{index}}" maxlength="10" placeholder="列：牛肉" />
-      <input class="weui-input" data-index="{{index}}" maxlength="10" placeholder="列：50g" />
+      <input bindchange="materialFood" class="weui-input" data-index="{{item.ind}}" maxlength="10" placeholder="列：牛肉" />
+      <input bindchange="materialVolume" class="weui-input" data-index="{{item.ind}}" maxlength="10" placeholder="列：50g" />
       <icon bindtap='deleMaterial' data-index="{{index}}" type="success" size="23"></icon>
     </view>
   </view>
@@ -83,7 +83,7 @@
       <view class="weui-uploader__bd">
         <view class="weui-uploader__files" id="uploaderFiles">
           <block wx:for="{{uploadObj.stepFiles}}" wx:key="*this">
-            <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+            <view class="weui-uploader__file" bindtap="previewstepFiles" id="{{item}}">
               <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
             </view>
           </block>

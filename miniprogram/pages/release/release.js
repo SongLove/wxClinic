@@ -1,6 +1,8 @@
 // pages/release/release.js
 const app = getApp()
 const db = wx.cloud.database()
+const util = require('../../utils.js')
+const regeneratorRuntime = require('./regenerator-runtime/runtime.js')
 Component({
   /**
    * 组件的属性列表
@@ -14,6 +16,8 @@ Component({
    */
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    screenWidth: 0,
+    screenHeight: 0,
     userInfo: null,
     cookingTime: ['十分钟', '半小时', '一小时', '两小时', '两小时以上'], //烹饪时间
     cookingIndex: 0, // 烹饪时间当前选中
@@ -21,7 +25,7 @@ Component({
     multiIndex: [0, 0], // 类别当前显示
     multiData: [], // 保存类别接口数据
     uploadObj: { // 传给后台的 菜谱数据
-      files: '', // 大图
+      cover: [], // 大图
       foodName: '', // 菜名
       recommend: '', // 介绍
       stepFiles: [], // 步骤图
@@ -31,7 +35,8 @@ Component({
       doohickey: '', // 小窍门
       difficulty: '', // 难度
       step: '', // 烹饪步骤
-      due: ''
+      due: '',
+      author: '' // 作者
     },
     difficulty: [{
         name: '0',
@@ -84,6 +89,42 @@ Component({
         "uploadObj.recommend": e.detail.value
       })
     },
+    // 添加食材按钮
+    addMaterial() {
+      let data = this.data.uploadObj.materialArr
+      console.log(this.data.uploadObj.materialArr)
+      data.push({
+        foodName: '',
+        volume: '',
+        ind: data.length
+      })
+      this.setData({
+        'uploadObj.materialArr': data
+      })
+    },
+    // 删除食材
+    deleMaterial(e) {
+      console.log(e.currentTarget.dataset.index)
+      let data = this.data.uploadObj.materialArr
+      data.splice(e.currentTarget.dataset.index, 1)
+      this.setData({
+        'uploadObj.materialArr': data
+      })
+    },
+    // 添加食材改变值
+    materialFood(e) {
+      let index = e.currentTarget.dataset.index
+      this.data.uploadObj.materialArr[index].foodName = e.detail.value
+      // this.setData({
+      //   "uploadObj.materialArr.foodName": data
+      // })
+      console.log(e.detail.value, this.data.uploadObj.materialArr)
+    },
+    materialVolume(e) {
+      let index = e.currentTarget.dataset.index
+      this.data.uploadObj.materialArr[index].volume = e.detail.value
+      console.log(e.detail.value, this.data.uploadObj.materialArr)
+    },
     // 操作步骤
     changeStep(e) {
       this.setData({
@@ -106,28 +147,6 @@ Component({
     // 单选框
     changeDifficulty(e) {
       console.log('radio发生change事件，携带value值为：', e.detail.value)
-    },
-    // 添加食材
-    addMaterial() {
-      let data = this.data.uploadObj.materialArr
-      data.push({
-        food: '',
-        value: '',
-        ind: data.length
-      })
-      this.setData({
-        'uploadObj.materialArr': data
-      })
-      console.log(this.data.uploadObj.materialArr)
-    },
-    // 删除食材
-    deleMaterial(e) {
-      console.log(e.currentTarget.dataset.index)
-      let data = this.data.uploadObj.materialArr
-      data.splice(e.currentTarget.dataset.index, 1)
-      this.setData({
-        'uploadObj.materialArr': data
-      })
     },
     bindMultiPickerChange(e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -153,18 +172,22 @@ Component({
     },
     chooseImage(e) {
       let that = this;
+      let count = e.currentTarget.dataset.name === 'stepFiles' ? 9 : 1
       wx.chooseImage({
+        count,
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function(res) {
-          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          // 上传图片
+          const filePath = res.tempFilePaths
+          console.log(res.tempFilePaths)
           if (e.currentTarget.dataset.name === 'stepFiles') {
             that.setData({
-              "uploadObj.stepFiles": that.data.uploadObj.stepFiles.concat(res.tempFilePaths)
+              "uploadObj.stepFiles": filePath
             });
           } else {
             that.setData({
-              "uploadObj.files": res.tempFilePaths
+              "uploadObj.cover": filePath
             });
           }
         }
@@ -172,18 +195,18 @@ Component({
     },
     previewImage: function(e) {
       wx.previewImage({
-        current: e.currentTarget.id, // 当前显示图片的http链接
-        urls: this.data.uploadObj.files // 需要预览的图片http链接列表
+        current: e.currentTarget.dataset.id, // 当前显示图片的http链接
+        urls: this.data.uploadObj.cover // 需要预览的图片http链接列表
       })
     },
     previewstepFiles: function(e) {
       wx.previewImage({
-        current: e.currentTarget.id, // 当前显示图片的http链接
+        current: e.currentTarget.dataset.id, // 当前显示图片的http链接
         urls: this.data.uploadObj.stepFiles // 需要预览的图片http链接列表
       })
     },
     // 发布食谱
-    addCookbook() {
+    async addCookbook() {
       let that = this
       let data = this.data.difficulty.filter(item => {
         return item.checked
@@ -191,54 +214,78 @@ Component({
       this.setData({
         "uploadObj.cookingTime": this.data.cookingTime[this.data.cookingIndex], // 烹饪时间
         "uploadObj.foodClassify": `${this.data.multiArray[0][this.data.multiIndex[0]]}，${this.data.multiArray[1][this.data.multiIndex[1]]}`, // 菜肴分类
-        "uploadObj.difficulty": data,
-        "uploadObj.due": new Date()
+        "uploadObj.difficulty": data[0].value,
+        "uploadObj.due": new Date(),
+        "uploadObj.author": app.globalData.userInfo
       })
-      // for (let i in this.data.uploadObj) {
-      //   console.log(this.data.uploadObj[i] instanceof Array, i)
-      //   if (this.data.uploadObj[i] instanceof Array) {
-      //     if (this.data.uploadObj[i].length == 0) {
-      //       console.log('信息未填写完整')
-      //       return
-      //     }
-      //   } else {
-      //     if (!this.data.uploadObj[i]) {
-      //       console.log('信息未填写完整')
-      //       return
-      //     }
-      //   }
-      // }
-      console.log(this.data.uploadObj, data)
+      console.log(this.data.uploadObj)
+      for (let i in this.data.uploadObj) {
+        let isPass = true
+        if (this.data.uploadObj[i] instanceof Array) {
+          if (this.data.uploadObj[i].length == 0) {
+            isPass = false
+          }
+        } else {
+          if (!this.data.uploadObj[i]) {
+            isPass = false
+          }
+        }
+        if (!isPass) {
+          wx.showToast({
+            title: '信息未填写完整',
+            icon: 'none'
+          })
+          return
+        }
+      }
       wx.showLoading({
         title: '发表中',
       })
-      wx.showToast({
-        title: '成功',
-        icon: 'success',
-        duration: 2000,
-        success: () => {
-          setTimeout(() => {
-            wx.navigateTo({
-              url: '../article/article',
-              success(res) {
-                // 保存当前提交的菜谱
-                wx.setStorage({
-                  key: 'ARTICLE',
-                  data: that.data.uploadObj
-                })
-              }
-            })
-          }, 2000)
-        }
+      let coverFile = that.data.uploadObj.cover[0]
+      const coverPath = Date.parse(new Date()) / 1000 + 'my-image' + +coverFile.match(/\.[^.]+?$/)[0]
+      let fileID = await util.upImg(coverPath, coverFile)
+      that.setData({
+        "uploadObj.cover": fileID
       })
-      // db.collection('articles').add({
-      //   data: that.data.uploadObj,
-      //   success(res) {
-      //     console.log(res)
-      //     // wx.hideLoading()
-      //   },
-      //   fail: console.error
-      // })
+      let newStepFiles = that.data.uploadObj.stepFiles
+      for (let i = 0; i < newStepFiles.length; i++) {
+        const cloudPath = Date.parse(new Date()) / 1000 + 'my-image' + i + newStepFiles[i].match(/\.[^.]+?$/)[0]
+        newStepFiles[i] = await util.upImg(cloudPath, newStepFiles[i])
+      }
+
+      that.setData({
+        "uploadObj.stepFiles": newStepFiles
+      })
+
+      console.log(this.data.uploadObj)
+      db.collection('articles').add({
+        data: that.data.uploadObj,
+        success(res) {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000,
+            success: () => {
+              setTimeout(() => {
+                wx.navigateTo({
+                  url: '../article/article',
+                  success(res) {
+                    // 保存当前提交的菜谱
+                    wx.setStorage({
+                      key: 'ARTICLE',
+                      data: that.data.uploadObj
+                    })
+                  }
+                })
+              }, 2000)
+            }
+          })
+        },
+        fail: console.error
+      })
+    },
+    upStepFile(data) {
+      return
     },
     getUserInfo(e) {
       console.log(e)

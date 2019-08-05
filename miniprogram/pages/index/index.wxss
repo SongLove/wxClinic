@@ -6,33 +6,41 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
-.swiper{
+
+.swiper {
   width: 100%;
   height: 300rpx;
 }
-.swiper img{
+
+.swiper img {
   width: 100%;
   height: 100%;
 }
-.recommend{
+
+.recommend {
+  width: 100%;
+  height: auto;
+}
+
+.recommendbox {
   width: 100%;
   height: 300rpx;
 }
-.recommendbox{
-  width: 100%;
-  height: 300rpx;
-}
-.text{
+
+.text {
   text-align: center;
   margin: 20rpx 0;
 }
-.text text{
+
+.text text {
   margin: 0 10rpx;
 }
-.activetit{
+
+.activetit {
   color: red;
 }
-.today, .hot{
+
+.today, .hot {
   width: 100%;
   height: 100%;
   background: #0063ce;
@@ -166,4 +174,49 @@ page {
   font-size: 24rpx;
   line-height: 36rpx;
   word-break: break-all;
+}
+
+.slide-image {
+  width: 100%;
+}
+
+.cookbook {
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.cookbook .list {
+  width: 48%;
+  height: 380rpx;
+  padding: 20rpx;
+  background: #fff;
+  margin: 5rpx;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.bookcover {
+  width: 100%;
+  height: 220rpx;
+}
+
+.author {
+  margin-top: -15rpx;
+}
+
+.author .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+}
+
+.product_image {
+  opacity: 0;
+  transition: opacity 0.5s linear 0.5s;
+}
+
+.loaded {
+  opacity: 1;
 }
